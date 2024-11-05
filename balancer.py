@@ -1,9 +1,23 @@
+import sys
+
+long_mode = False
+if len(sys.argv) > 2:
+    print('Error: expecting one argument at most')
+    exit()
+elif len(sys.argv) == 2:
+    if sys.argv[1] == '-l':
+        long_mode = True
+    else:
+        print('Error: invalid argument')
+        exit()
+
 TARGET_VAS_ALLOCATION = 0.2
 TARGET_VGS_ALLOCATION = 0.8
 
-print(f'Target VAS allocation: {TARGET_VAS_ALLOCATION * 100:.1f}%')
-print(f'Target VGS allocation: {TARGET_VGS_ALLOCATION * 100:.1f}%')
-print()
+if long_mode:
+    print(f'Target VAS allocation: {TARGET_VAS_ALLOCATION * 100:.1f}%')
+    print(f'Target VGS allocation: {TARGET_VGS_ALLOCATION * 100:.1f}%')
+    print()
 
 if TARGET_VAS_ALLOCATION + TARGET_VGS_ALLOCATION != 1:
     print('Error: target allocations must add to 100%')
@@ -27,12 +41,14 @@ current_vgs_value = input_cash_amount('Enter the current VGS value ($): ')
 print()
 
 current_portfolio_value = current_vas_value + current_vgs_value
-current_vas_allocation = current_vas_value / current_portfolio_value
-current_vgs_allocation = current_vgs_value / current_portfolio_value
-print(f'Current portfolio value: ${current_portfolio_value:.2f}')
-print(f'Current VAS allocation: {current_vas_allocation * 100:.1f}%')
-print(f'Current VGS allocation: {current_vgs_allocation * 100:.1f}%')
-print()
+
+if long_mode:
+    current_vas_allocation = current_vas_value / current_portfolio_value
+    current_vgs_allocation = current_vgs_value / current_portfolio_value
+    print(f'Current portfolio value: ${current_portfolio_value:.2f}')
+    print(f'Current VAS allocation: {current_vas_allocation * 100:.1f}%')
+    print(f'Current VGS allocation: {current_vgs_allocation * 100:.1f}%')
+    print()
 
 total_investment_amount = input_cash_amount('Enter the total investment amount ($): ')
 print()
